@@ -8,10 +8,10 @@ export const cargarConfiguracion = () =>{
 }
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBmSDBxRUmIDIj9MrUcy3YDxoVNxInQJyE",
-  authDomain: "productosfirebase-b586c.firebaseapp.com",
-  projectId: "productosfirebase-b586c",
-  storageBucket: "productosfirebase-b586c.appspot.com",
-  messagingSenderId: "161217560223",
-  appId: "1:161217560223:web:bb4f6e458d7cc9e6a52caa"
+  apiKey: "AIzaSyCy1GLA-HuemrjygO2u53tdxCM-2XKfot0",
+  authDomain: "cuentasfacil-da92b.firebaseapp.com",
+  projectId: "cuentasfacil-da92b",
+  storageBucket: "cuentasfacil-da92b.appspot.com",
+  messagingSenderId: "844886659306",
+  appId: "1:844886659306:web:415ae51b470a4649158793"
 };

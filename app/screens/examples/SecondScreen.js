@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image, Button } from 'react-native';
-import { updateData } from '../../../callToDB';
+import { updateData, getAllDataUser } from '../../../callToDB';
 
 
 export const Second = ({navigation}) => {
@@ -14,12 +14,13 @@ export const Second = ({navigation}) => {
         <Button
             title='test'
             onPress={()=>{
-                updateData("user", {
-                    name: "Luis",
+                /* updateData("user", {
+                    name: "Luis Pérez Señalin",
                     email: "enriqueperezse21@gmail.com",
                     id: "0705052728",
                     groups: [],
-                })
+                }) */
+                getAllDataUser("0705052728")
                 navigation.goBack()
                 }
             }
