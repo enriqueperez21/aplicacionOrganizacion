@@ -2,7 +2,6 @@ import { initializeApp } from "firebase/app"
 import { getFirestore } from "firebase/firestore"
 
 export const cargarConfiguracion = () =>{
-  console.log("Inicializacion correcta")
   const app = initializeApp(firebaseConfig)
   global.dbCon = getFirestore(app)
 }

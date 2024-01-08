@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { Button, StyleSheet, Text, View} from 'react-native';
 
-export const Home = ({navigation}) => {
+export const Account = ({navigation}) => {
     return(
         <View style={styles.container}>
             <Text>Home page</Text>
