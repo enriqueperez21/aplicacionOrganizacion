@@ -8,6 +8,7 @@ export const styleGroupCard = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 12,
         padding: 12,
+        marginBottom: 20,
     },groupTittle:{
         fontSize: 18,
     },

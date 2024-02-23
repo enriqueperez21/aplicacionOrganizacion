@@ -14,30 +14,27 @@ export const Home = ({navigation}) => {
     categories = data.UserExpenseCategory
   }
   return(
-    <View style={styleScreen.container}>
+    <View style={{flex: 1}}>
     {(data == null) ? (
-      <View>
-        <Headbar ScreenName = "Home" userName = "Cargando..."/>
-        <View style={styleScreen.screen}>
-          <View style={styleScreen.spacePrincipleWord}>
-            <Text style={styleScreen.mainText}>Grupo de cuentas</Text>
-          </View>
-            <View style={styleScreen.spaceToShowArray}>
-                <Text>CARGANDO</Text>
-            </View>
-          <View style={styleScreen.spaceToSFooter}>
-          </View>
+      <View style={styleScreen.container}>
+      <Headbar ScreenName = "Home" userName = "Cargando..."/>
+      <View style={styleScreen.screen}>
+        <View style={styleScreen.spacePrincipleWord}>
+          <Text style={styleScreen.mainText}>Grupo de cuentas</Text>
+        </View>
+        <View style={styleScreen.spaceToShowArray}>
+            <Text>CARGANDO</Text>
+        </View>
+        <View style={styleScreen.spaceToSFooter}>
         </View>
       </View>
-    ) : (
-      <View>
+    </View>
+    ):(
+      <View style={styleScreen.container}>
         <Headbar ScreenName = "Home" userName = {data.user.name} />
         <View style={styleScreen.screen}>
           <View style={styleScreen.spacePrincipleWord}>
             <Text style={styleScreen.mainText}>Grupo de cuentas</Text>
-          </View>
-          <View style={styleScreen.spaceToShowArray}>
-              <Text>CARGANDO</Text>
           </View>
           <View style={styleScreen.spaceToShowArray}>
                 <FlatList
@@ -45,9 +42,8 @@ export const Home = ({navigation}) => {
                   visible={categories.length > 0}
                   data={categories}
                   renderItem={({ item }) => {
-                    console.log(item)
                     return (
-                      <GroupCard group={item} navigation ={item} />
+                      <GroupCard group={item} navigation ={navigation} />
                     );
                   }}
                   keyExtractor={(item) => item._id}
@@ -57,7 +53,7 @@ export const Home = ({navigation}) => {
           </View>
         </View>
       </View>
-      )}
+    )}
     </View>
-    )
+  )
 }

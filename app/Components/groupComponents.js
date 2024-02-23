@@ -7,10 +7,11 @@ export const GroupCard = ({group, navigation}) => {
     const context = useData()
     const data = context.allData
     return(
-        <TouchableOpacity 
-            onPress={() => 
+        <TouchableOpacity
+            onPress={() => {
+                console.log(data)
                 navigation.navigate("GroupNav")
-            }>
+            }}>
             <View style={styleGroupCard.container}>
                 <View style={styleGroupCard.center}>
                     <Text style={styleGroupCard.groupTittle}>{group.name}</Text>
