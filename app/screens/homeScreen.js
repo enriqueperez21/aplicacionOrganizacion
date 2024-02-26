@@ -1,10 +1,10 @@
-import { StatusBar } from 'expo-status-bar';
-import { Button, FlatList, StyleSheet, Text, View} from 'react-native';
+import { Button, FlatList, Text, TouchableOpacity, View} from 'react-native';
 import { Headbar } from '../headBar/headBar';
 import { styleScreen } from '../standard/screenView';
-import { GroupCard } from '../Components/groupComponents';
 import { useData } from '../context/allDataContext';
-
+import { Texts } from '../standard/Texts';
+import { styleHomeScreen } from '../Components/Home/styleHome';
+import { AccountsSection, BalanceCard, ExpenseGestorSection, RecordsSection, RegisterSection } from '../Components/Home/HomeSection';
 
 export const Home = ({navigation}) => {
   const context = useData()
@@ -16,44 +16,42 @@ export const Home = ({navigation}) => {
   return(
     <View style={{flex: 1}}>
     {(data == null) ? (
-      <View style={styleScreen.container}>
-      <Headbar ScreenName = "Home" userName = "Cargando..."/>
+      <LoadScreen/>
+    ):(
+      <HomeScreen data = {data} navigation = {navigation}/>
+    )}
+    </View>
+  )
+}
+
+const LoadScreen = () =>{
+  return(
+    <View style={styleScreen.container}>
+      <Headbar ScreenName = {Texts.Headbar.Home} userName = {Texts.LoadStatus.Load}/>
       <View style={styleScreen.screen}>
-        <View style={styleScreen.spacePrincipleWord}>
-          <Text style={styleScreen.mainText}>Grupo de cuentas</Text>
-        </View>
         <View style={styleScreen.spaceToShowArray}>
-            <Text>CARGANDO</Text>
+            <Text>{Texts.LoadStatus.Load}</Text>
         </View>
         <View style={styleScreen.spaceToSFooter}>
         </View>
       </View>
     </View>
-    ):(
-      <View style={styleScreen.container}>
-        <Headbar ScreenName = "Home" userName = {data.user.name} />
+  )
+}
+
+const HomeScreen = ({data, navigation}) =>{
+  return(
+    <View style={styleScreen.container}>
+        <Headbar ScreenName = {Texts.Headbar.Home} userName = {data.user.name} />
         <View style={styleScreen.screen}>
-          <View style={styleScreen.spacePrincipleWord}>
-            <Text style={styleScreen.mainText}>Grupo de cuentas</Text>
-          </View>
-          <View style={styleScreen.spaceToShowArray}>
-                <FlatList
-                  hidden={!categories || categories.length === 0}
-                  visible={categories.length > 0}
-                  data={categories}
-                  renderItem={({ item }) => {
-                    return (
-                      <GroupCard group={item} navigation ={navigation} />
-                    );
-                  }}
-                  keyExtractor={(item) => item._id}
-                />
-          </View>
+          <BalanceCard saldo = {"$190,45"}/>
+          <AccountsSection nameSection={Texts.HomeScreen.Accounts} viewAll={Texts.HomeScreen.ViewAll}/>
+          <ExpenseGestorSection nameSection={Texts.HomeScreen.ExpenseGestor} viewAll={Texts.HomeScreen.ViewAll}/>
+          <RegisterSection nameSection={Texts.HomeScreen.ExpenseGestor} viewAll={Texts.HomeScreen.ViewAll}/>
+          <RecordsSection nameSection={Texts.HomeScreen.ExpenseGestor} viewAll={Texts.HomeScreen.ViewAll}/>
           <View style={styleScreen.spaceToSFooter}>
           </View>
         </View>
       </View>
-    )}
-    </View>
   )
 }

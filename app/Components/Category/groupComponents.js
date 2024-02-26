@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
-import { Button, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import { Text, TouchableOpacity, View} from 'react-native';
 import { styleGroupCard } from './styleGroupCard';
-import { useData } from '../context/allDataContext';
+import { useData } from '../../context/allDataContext';
 
 export const GroupCard = ({group, navigation}) => {
     const context = useData()
@@ -9,9 +9,11 @@ export const GroupCard = ({group, navigation}) => {
     return(
         <TouchableOpacity
             onPress={() => {
-                console.log(data)
-                navigation.navigate("GroupNav")
-            }}>
+                context.setCategory(group)
+            }}
+            style={{marginBottom: 20,}}
+            >
+                
             <View style={styleGroupCard.container}>
                 <View style={styleGroupCard.center}>
                     <Text style={styleGroupCard.groupTittle}>{group.name}</Text>
@@ -49,10 +51,3 @@ export const GroupCard = ({group, navigation}) => {
         </TouchableOpacity>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: "red",
-    },
-  });

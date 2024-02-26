@@ -1,5 +1,6 @@
 import { useState, createContext, useContext, useEffect } from "react"
 import { getAllDataUser } from "../../services/apiGet/getAllData"
+import { useFonts } from 'expo-font';
 
 const context = createContext()
 
@@ -8,6 +9,9 @@ export const useData = () =>{
 }
 
 export const DataProvider = ({children}) =>{
+  const [fontsLoaded] = useFonts({
+    'LatoFont': require('../../assets/Fonts/Lato-Light.ttf'),
+  });
   const [allData, setAllData] = useState(null)
   const [category, setCategory] = useState({})
   const [subCategory, setSubCategory] = useState({})
