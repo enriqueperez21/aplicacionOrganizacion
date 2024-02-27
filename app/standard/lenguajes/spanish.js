@@ -9,7 +9,8 @@ export const spanish = {
     "TotalBalance": "Balance total",
     "Accounts": "Cuentas",
     "ExpenseGestor": "Organizador de gastos",
-    "ExpenseRegister": "Registro de gastos",
+    "expenseRegister": " Registrar mis gastos",
+    "ExpenseRecords": "Registro de gastos",
     "ViewAll": "Ver todo",
     
   }

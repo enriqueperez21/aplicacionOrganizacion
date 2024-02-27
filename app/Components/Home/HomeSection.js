@@ -1,64 +1,51 @@
 import { Button, FlatList, Text, TouchableOpacity, View} from 'react-native';
-import { styleBalanceCard, styleHomeScreen } from './styleHome';
-import { Texts } from '../../standard/Texts';
+import { styleHomeScreen } from './styleHome';
+import { AccountsCardSection, ExpenseGestorCardSection } from './HomeCards';
+import { ButtonPlus } from '../../../assets/Buttons/Buttons';
 
-export const BalanceCard = ({saldo}) => {
-  return(
-    <View style={styleBalanceCard.container}>
-      <View style={styleBalanceCard.secondContainer}>
-        <Text style={[styleBalanceCard.textSize, styleBalanceCard.textColor]}>{Texts.HomeScreen.TotalBalance}</Text>
-        <Text style={[styleBalanceCard.textSize, styleBalanceCard.textColor]}>{saldo}</Text>
-      </View>
-    </View>
-  )
-}
 
-const HeadSection = ({nameSection, viewAll}) =>{
+const HeadSection = ({nameSection, viewAll, onPressFunction}) =>{
   return(
     <View style={styleHomeScreen.sectionsHead}>
       <Text style={styleHomeScreen.sectionsText}>{nameSection}</Text>
       <TouchableOpacity 
-        style={styleHomeScreen.center}
-        onPress={()=>{/* */}}
-      >
+      style={styleHomeScreen.center}
+      onPress={()=>onPressFunction}>
         <Text style={styleHomeScreen.sectionsSmallText}>{viewAll}</Text>
       </TouchableOpacity>
     </View>
   )
 }
 
-export const AccountsSection = ({nameSection, viewAll}) =>{
+export const AccountsSection = ({props}) =>{
   return(
-    <View style={styleHomeScreen.sections}>
-      <HeadSection nameSection={nameSection} viewAll={viewAll}/>
+    <View style={[styleHomeScreen.sections, {flex: 1}]}>
+      <HeadSection nameSection={props.nameSection} viewAll={props.viewAll}/>
+      <AccountsCardSection accounts = {props.accounts} props = {props}/>
   </View>
 )}
 
-export const ExpenseGestorSection = ({nameSection, viewAll}) =>{
+export const ExpenseGestorSection = ({nameSection, viewAll, UserExpenseCategory}) =>{
   return(
-    <View style={styleHomeScreen.sections}>
+    <View style={[styleHomeScreen.sections, {flex: 1,}]}>
       <HeadSection nameSection={nameSection} viewAll={viewAll}/>
+      <ExpenseGestorCardSection UserExpenseCategory = {UserExpenseCategory}/>
   </View>
 )}
 
 export const RegisterSection = ({nameSection, viewAll}) =>{
   return(
     <View style={styleHomeScreen.sections}>
-    <View style={styleHomeScreen.sectionsHead}>
-      <Text style={styleHomeScreen.sectionsText}>{nameSection}</Text>
-      <TouchableOpacity 
-        style={styleHomeScreen.center}
-        onPress={()=>{/* */}}
-      >
-        <Text style={styleHomeScreen.sectionsSmallText}>{viewAll}</Text>
-      </TouchableOpacity>
+      <View style={{flexDirection: "row", alignItems: "center"}}>
+        <Text style={styleHomeScreen.sectionsText}>{nameSection}</Text>
+        <ButtonPlus/>
+      </View>
     </View>
-  </View>
 )}
 
 export const RecordsSection = ({nameSection, viewAll}) =>{
   return(
-    <View style={styleHomeScreen.sections}>
+    <View style={[styleHomeScreen.sections, {flex: 1,}]}>
       <HeadSection nameSection={nameSection} viewAll={viewAll}/>
   </View>
 )}

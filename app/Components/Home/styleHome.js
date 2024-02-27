@@ -4,7 +4,10 @@ import { TextFont } from "../../standard/Texts";
 
 export const styleHomeScreen = StyleSheet.create({
   sections:{
-    flex: 1,
+    flexDirection: "column",
+    justifyContent: "space-between",
+  },
+  sectionRegister:{
     flexDirection: "column",
     justifyContent: "space-between",
   },
@@ -51,7 +54,55 @@ export const styleBalanceCard = StyleSheet.create({
       fontSize: 24,
   },
   textColor:{
-    color: colors.FontSecundaryColor
+    color: colors.FontPrimaryColor
+  },
+  rowContainer:{
+      flexDirection: "row",
+  },
+  rightSide:{
+      justifyContent: "flex-end",
+  },
+  marginTop:{
+      marginTop: 10,
+  },
+});
+
+export const styleAccountCard = StyleSheet.create({
+  containerAll:{
+    flex: 1,
+    flexDirection: "row"
+  },
+  container:{
+      flex: 1,
+      flexDirection: "row",
+      alignItems: "center",
+  },
+  eachCard:{
+      backgroundColor: colors.primaryColor,
+      borderColor: "black",
+      borderWidth: 1,
+      borderRadius: 12,
+      paddingHorizontal: 12,
+      paddingVertical: 10,
+      gap: 10,
+  },
+  secondContainer:{
+      justifyContent: "space-between",
+      flexDirection: "row",
+      alignItems: "center",
+  },groupTittle:{
+      fontSize: 18,
+  },
+  center:{
+      alignItems: "center",
+      justifyContent: "center",
+  },
+  textSize:{
+      fontFamily: TextFont.fontFamily,
+      fontSize: 18,
+  },
+  textColor:{
+    color: colors.FontPrimaryColor
   },
   rowContainer:{
       flexDirection: "row",

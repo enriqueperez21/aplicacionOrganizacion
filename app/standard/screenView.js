@@ -5,7 +5,9 @@ let heightScreen = screen.height;
 
 export const colors = {
     primaryColor: "#2F59EE",
-    FontSecundaryColor: "white"
+    FontPrimaryColor: "white",
+    secundaryColor: "white",
+    FontSecundaryColor: "black"
 }
 
 const screenStandar = {
@@ -13,7 +15,7 @@ const screenStandar = {
         primary: "white",
     },
     separation: {
-        headSeparation: heightScreen * 0.04,
+        headSeparation: 0,
         horizontalSeparation: widthScreen * 0.055,
         userHorizontalSeparation: widthScreen * 0.035,
     },

@@ -3,6 +3,9 @@
     "name": "aplicacionOrganizacion",
     "slug": "aplicacionOrganizacion",
     "version": "1.0.0",
+    "androidNavigationBar": {
+      "visible": "immersive"
+    },
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
