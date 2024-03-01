@@ -4,14 +4,14 @@ import { AccountsCardSection, ExpenseGestorCardSection } from './HomeCards';
 import { ButtonPlus } from '../../../assets/Buttons/Buttons';
 
 
-const HeadSection = ({nameSection, viewAll, onPressFunction}) =>{
+const HeadSection = ({props, screenName}) =>{
   return(
     <View style={styleHomeScreen.sectionsHead}>
-      <Text style={styleHomeScreen.sectionsText}>{nameSection}</Text>
+      <Text style={styleHomeScreen.sectionsText}>{props.nameSection}</Text>
       <TouchableOpacity 
       style={styleHomeScreen.center}
-      onPress={()=>onPressFunction}>
-        <Text style={styleHomeScreen.sectionsSmallText}>{viewAll}</Text>
+      onPress={()=>props.onPressViewAll(props.section, screenName)}>
+        <Text style={styleHomeScreen.sectionsSmallText}>{props.viewAll}</Text>
       </TouchableOpacity>
     </View>
   )
@@ -20,32 +20,32 @@ const HeadSection = ({nameSection, viewAll, onPressFunction}) =>{
 export const AccountsSection = ({props}) =>{
   return(
     <View style={[styleHomeScreen.sections, {flex: 1}]}>
-      <HeadSection nameSection={props.nameSection} viewAll={props.viewAll}/>
+      <HeadSection props = {props} screenName = {"GroupNav"}/>
       <AccountsCardSection accounts = {props.accounts} props = {props}/>
   </View>
 )}
 
-export const ExpenseGestorSection = ({nameSection, viewAll, UserExpenseCategory}) =>{
+export const ExpenseGestorSection = ({props}) =>{
   return(
     <View style={[styleHomeScreen.sections, {flex: 1,}]}>
-      <HeadSection nameSection={nameSection} viewAll={viewAll}/>
-      <ExpenseGestorCardSection UserExpenseCategory = {UserExpenseCategory}/>
+      <HeadSection props = {props} screenName = {"GroupNav"}/>
+      <ExpenseGestorCardSection categories = {props.categories} props = {props}/>
   </View>
 )}
 
-export const RegisterSection = ({nameSection, viewAll}) =>{
+export const RegisterSection = ({props}) =>{
   return(
     <View style={styleHomeScreen.sections}>
       <View style={{flexDirection: "row", alignItems: "center"}}>
-        <Text style={styleHomeScreen.sectionsText}>{nameSection}</Text>
-        <ButtonPlus/>
+        <Text style={styleHomeScreen.sectionsText}>{props.nameSection}</Text>
+        <ButtonPlus flex={0.5} props = {props}/>
       </View>
     </View>
 )}
 
-export const RecordsSection = ({nameSection, viewAll}) =>{
+export const RecordsSection = ({props}) =>{
   return(
     <View style={[styleHomeScreen.sections, {flex: 1,}]}>
-      <HeadSection nameSection={nameSection} viewAll={viewAll}/>
+      <HeadSection props = {props} screenName = {"Organizers"}/>
   </View>
 )}

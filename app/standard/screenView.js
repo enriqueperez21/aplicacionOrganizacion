@@ -4,9 +4,9 @@ let widthScreen = screen.width;
 let heightScreen = screen.height;
 
 export const colors = {
-    primaryColor: "#2F59EE",
+    primaryColor:   "#2F59EE",
     FontPrimaryColor: "white",
-    secundaryColor: "white",
+    secundaryColor: "#FFE49F",
     FontSecundaryColor: "black"
 }
 
@@ -44,7 +44,6 @@ export const styleScreen = StyleSheet.create({
     },
     screen: {
         flex: 1,
-        marginTop: 30,
         justifyContent: "space-between",
         paddingHorizontal: screenStandar.separation.horizontalSeparation,
     },

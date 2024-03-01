@@ -9,8 +9,8 @@ import { BalanceCard } from '../Components/Home/HomeCards';
 export const Home = ({navigation}) => {
   const context = useData()
   let data = context.allData
-  let categories
-  let accountSectionProps
+  let accountSectionProps, expenseGestorSectionProps, registerSectionProps, RecordsSectionProps
+  const navigateToAnd = (section, especific)=>{navigation.navigate(section, {screen: especific})}
   const accountTest = [
     {"name" : "Banco Pichincha", "mount" : 250, "icon" : "bank"},
     {"name" : "Banco Guayaquil", "mount" : 2.50, "icon" : "bank"},
@@ -19,14 +19,17 @@ export const Home = ({navigation}) => {
     {"name" : "Ahorros", "mount" : 2.50, "icon" : "money"}
   ]
   if(data != null){
-    categories = data.UserExpenseCategory
-    data = {...data, accounts : accountTest}
-    accountSectionProps = {
-      nameSection:Texts.HomeScreen.Accounts, viewAll:Texts.HomeScreen.ViewAll, accounts:data.accounts, onPressAccount:(currentAccount)=>{console.log("Cuenta presionada ",currentAccount)}
-    }
+    data = {...data, Accounts : accountTest}
+    accountSectionProps = {...getSectionProps("Accounts","Group", navigateToAnd, "Group", "GroupNav"), accounts:data.Accounts}
+    expenseGestorSectionProps = {...getSectionProps("ExpenseGestor", "Group", navigateToAnd, "CreateGestor", "New Category"), categories:data.UserExpenseCategory}
+    registerSectionProps = getSectionProps("ExpenseGestor", "Group", navigateToAnd, "Group", "GroupNav")
+    RecordsSectionProps = getSectionProps("ExpenseGestor", "Group", navigateToAnd, "Group", "GroupNav")
   }
   const props={
     accountSectionProps,
+    expenseGestorSectionProps,
+    registerSectionProps,
+    RecordsSectionProps
   }
   return(
     <View style={{flex: 1}}>
@@ -54,19 +57,35 @@ const LoadScreen = () =>{
   )
 }
 
-const HomeScreen = ({data, navigation, props}) =>{
+const HomeScreen = ({data, props}) =>{
   return(
     <View style={styleScreen.container}>
         <Headbar ScreenName = {Texts.Headbar.Home} userName = {data.user.name} />
         <View style={styleScreen.screen}>
           <BalanceCard saldo = {"$195,45"}/>
-          <AccountsSection props = {props.accountSectionProps}/>
-          <ExpenseGestorSection nameSection={Texts.HomeScreen.ExpenseGestor} viewAll={Texts.HomeScreen.ViewAll} UserExpenseCategory= {data.UserExpenseCategory}/>
-          <RegisterSection nameSection={Texts.HomeScreen.expenseRegister} viewAll={Texts.HomeScreen.ViewAll}/>
-          <RecordsSection nameSection={Texts.HomeScreen.ExpenseRecords} viewAll={Texts.HomeScreen.ViewAll}/>
+          <AccountsSection      props = {props.accountSectionProps}/>
+          <ExpenseGestorSection props = {props.expenseGestorSectionProps}/>
+          <RegisterSection      props = {props.registerSectionProps}/>
+          <RecordsSection       props = {props.RecordsSectionProps}/>
           <View style={styleScreen.spaceToSFooter}>
           </View>
         </View>
       </View>
   )
 }
+
+const getSectionProps = (sectionName, section, navigateToAnd, section2, especific2) => {
+  const onPressPlus = navigateToAnd
+  const onPressViewAll = navigateToAnd
+  const onPressSection = (currentAccount)=>{console.log("Cuenta presionada ",currentAccount)}
+  return {
+    nameSection: Texts.HomeScreen[sectionName],
+    viewAll: Texts.HomeScreen.ViewAll,
+    onPressSection,
+    onPressPlus,
+    onPressViewAll,
+    section,
+    section2,
+    especific2
+  };
+};

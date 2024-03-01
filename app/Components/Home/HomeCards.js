@@ -15,39 +15,39 @@ export const BalanceCard = ({saldo}) => {
   )
 }
 
-export const SectionView = ({children}) => {
+export const SectionView = ({array, RenderItem, props}) => {
   return(
     <View style={styleAccountCard.containerAll}>
       <View style={styleAccountCard.container}>
-        {children}
+      <FlatList
+          horizontal = {true}
+          style={{flexDirection: "row", flex: 1}}
+          contentContainerStyle={{ gap: 10 }}
+          showsHorizontalScrollIndicator={false}
+          data={array}
+          renderItem={RenderItem}
+          keyExtractor={(item) => item.id}
+        />
+        <ButtonPlus props ={props}/>
       </View>
     </View>
   )
 }
 
 export const AccountsCardSection = ({accounts, props}) => {
+  const RenderItem = ({ item }) => {
+    return (
+      <AccountCard accountProps = {item} props={props}/>
+    );
+  }
   return(
-    <SectionView>
-        <FlatList
-          horizontal = {true}
-          style={{flexDirection: "row", flex: 1}}
-          contentContainerStyle={{ gap: 10 }}
-          data={accounts}
-          renderItem={({ item }) => {
-            return (
-                <AccountCard accountProps = {item} props={props}/>
-            );
-          }}
-          keyExtractor={(item) => item.id}
-        />
-        <ButtonPlus/>
-    </SectionView>
+    <SectionView array={accounts} RenderItem={RenderItem} props= {props}/>
   )
 }
 
 export const AccountCard = ({accountProps, props}) => {
   return(
-    <TouchableOpacity style={styleAccountCard.eachCard} onPress={()=>props.onPressAccount(accountProps.name)}>
+    <TouchableOpacity style={styleAccountCard.eachCard} onPress={()=>props.onPressSection(accountProps.name)}>
       <View style={styleAccountCard.secondContainer}>
         <Text style={[styleAccountCard.textSize, styleAccountCard.textColor, {marginRight: 10}]}>{accountProps.name}</Text>
         <FontAwesome name= {accountProps.icon} color={"white"} size={20} style={{alignItems: "center"}}/>
@@ -60,36 +60,28 @@ export const AccountCard = ({accountProps, props}) => {
   )
 }
 
-export const ExpenseGestorCardSection = ({UserExpenseCategory}) =>{
+export const ExpenseGestorCardSection = ({categories, props}) =>{
+  const RenderItem = ({ item }) => {
+    item = {...item, icon : "home"}
+    return (
+      <ExpenseGestorCard category = {item} props= {props}/>
+    );
+  }
   return(
-    <SectionView>
-      <FlatList
-          horizontal = {true}
-          style={{flexDirection: "row", flex: 1}}
-          contentContainerStyle={{ gap: 10 }}
-          data={UserExpenseCategory}
-          renderItem={({ item }) => {
-            return (
-                <ExpenseGestorCard name = {item.name} period = {item.timePeriod.period} budget={item.monthlyBudget} icon = {"home"}/>
-            );
-          }}
-          keyExtractor={(item) => item._id}
-        />
-        <ButtonPlus/>
-    </SectionView>
+    <SectionView array={categories} RenderItem={RenderItem} props = {props}/>
   )
 }
 
-export const ExpenseGestorCard = ({name, period, icon, budget, color}) => {
+export const ExpenseGestorCard = ({category, props}) => {
   return(
-    <TouchableOpacity style={styleAccountCard.eachCard}>
-      <View style={styleAccountCard.secondContainer}>
-        <FontAwesome name= {icon} color={"white"} size={20} style={{alignItems: "center"}}/>
-        <Text style={[styleAccountCard.textSize, styleAccountCard.textColor, {marginLeft: 10}]}>{name}</Text>
+    <TouchableOpacity style={styleAccountCard.eachCard2} onPress={()=>{props.onPressSection(category)}}>
+      <View style={[styleAccountCard.secondContainer, {justifyContent: "center"}]}>
+        <FontAwesome name= {category.icon} color={"black"} size={20} style={{alignItems: "center"}}/>
+        <Text style={[styleAccountCard.textSize, styleAccountCard.textColor2, {marginLeft: 10}]}>{category.name}</Text>
       </View>
       <View style={styleAccountCard.secondContainer}>
-        <Text style={[styleAccountCard.textSize, styleAccountCard.textColor]}>{period}</Text>
-        <Text style={[styleAccountCard.textSize, styleAccountCard.textColor]}>$ {budget}</Text>
+        <Text style={[styleAccountCard.textSize, styleAccountCard.textColor2, {paddingRight: 10}]}>{category.timePeriod.period}</Text>
+        <Text style={[styleAccountCard.textSize, styleAccountCard.textColor2]}>$ {category.monthlyBudget}</Text>
       </View>
     </TouchableOpacity>
   )

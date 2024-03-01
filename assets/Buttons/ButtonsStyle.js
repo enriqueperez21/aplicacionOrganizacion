@@ -9,8 +9,8 @@ export const styleButtonPlus = StyleSheet.create({
     borderColor: "black",
     borderWidth: 1,
     borderRadius: 12,
-    padding: 15,
-    paddingLeft: 17,
+    padding: 10,
+    paddingLeft: 12,
     justifyContent: "center",
     alignItems: "center"
   }

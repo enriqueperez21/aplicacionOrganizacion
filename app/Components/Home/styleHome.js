@@ -32,6 +32,7 @@ export const styleHomeScreen = StyleSheet.create({
 export const styleBalanceCard = StyleSheet.create({
   container:{
       flex: 1,
+      justifyContent: "center"
   },
   secondContainer:{
       flexDirection: "row",
@@ -86,6 +87,15 @@ export const styleAccountCard = StyleSheet.create({
       paddingVertical: 10,
       gap: 10,
   },
+  eachCard2:{
+    backgroundColor: colors.secundaryColor,
+    borderColor: "black",
+    borderWidth: 1,
+    borderRadius: 12,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    gap: 10,
+},
   secondContainer:{
       justifyContent: "space-between",
       flexDirection: "row",
@@ -103,6 +113,9 @@ export const styleAccountCard = StyleSheet.create({
   },
   textColor:{
     color: colors.FontPrimaryColor
+  },
+  textColor2:{
+    color: colors.FontSecundaryColor
   },
   rowContainer:{
       flexDirection: "row",

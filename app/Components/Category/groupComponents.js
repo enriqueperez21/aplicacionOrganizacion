@@ -1,53 +1,60 @@
 import { StatusBar } from 'expo-status-bar';
 import { Text, TouchableOpacity, View} from 'react-native';
-import { styleGroupCard } from './styleGroupCard';
+import { styleCategoryCard } from './styleCategoryCard';
 import { useData } from '../../context/allDataContext';
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
+import { Texts } from '../../standard/Texts';
 
-export const GroupCard = ({group, navigation}) => {
+export const GroupCard = ({category, navigation}) => {
     const context = useData()
     const data = context.allData
+    const navigateToAnd = (section, especific)=>{navigation.navigate(section, {screen: especific})}
+    const {categoryName, minimumExpense, maximumExpense, minimumResult, maximumResult, periodTime, categoryBudget} = getCategoryData(category)
+    const iconName = "home"
+    const {Period, Budget, EstimatedExpense, Result} = Texts.ExpenseGestorScreen.CategoryCard
     return(
         <TouchableOpacity
-            onPress={() => {
-                context.setCategory(group)
-            }}
-            style={{marginBottom: 20,}}
-            >
+            onPress={() => {context.setCategory(category)}}
+            style={{marginBottom: 20,}}>
                 
-            <View style={styleGroupCard.container}>
-                <View style={styleGroupCard.center}>
-                    <Text style={styleGroupCard.groupTittle}>{group.name}</Text>
-                </View>
-                <View style={styleGroupCard.marginTop}>
-                    <View><Text style={styleGroupCard.textSize}>Gastos</Text></View>
-                    <View style={[styleGroupCard.rowContainer, styleGroupCard.rightSide]}>
-                        <Text style={styleGroupCard.textSize}>{group.expectedExpense.minimum}</Text>
-                        {group.expectedExpense.maximum == 0 ? (
-                            <Text></Text>
-                        ) : (
-                            <Text style={styleGroupCard.textSize}> - {group.expectedExpense.maximum} </Text>
-                        )}
+            <View style={styleCategoryCard.container}>
+                <View style={styleCategoryCard.categoryData}>
+                    <View style={styleCategoryCard.categoryName}>
+                        <FontAwesome5 name={iconName} color={"black"} size={20} />
+                        <Text style={styleCategoryCard.TextCategorySection}>  {categoryName}</Text>
+                    </View>
+                    <View style={styleCategoryCard.categoryPeriod}>
+                        <Text style={styleCategoryCard.textPeriodData}>{Period}: {periodTime}</Text>
                     </View>
                 </View>
-                <View>
-                    <View><Text style={styleGroupCard.textSize}>{group.timePeriod.count} {group.timePeriod.period}</Text></View>
-                    <View style={[styleGroupCard.rowContainer, styleGroupCard.rightSide]}>
-                        {group.expectedResult.minimum < 0 ?(
-                            <Text style={[styleGroupCard.textSize, {color: "red"}]}>{group.expectedResult.minimum} </Text>
-                        ) :(
-                            <Text style={[styleGroupCard.textSize, {color: "green"}]}>{group.expectedResult.minimum} </Text>
-                        )}
-                        <Text style={styleGroupCard.textSize}> / </Text>
-                        {group.expectedResult.maximum == 0 ? (
-                            <Text></Text>
-                        ) : group.expectedResult.maximum < 0 ?(
-                            <Text style={[styleGroupCard.textSize, {color: "red"}]}>{group.expectedResult.maximum} </Text>
-                        ) :(
-                            <Text style={[styleGroupCard.textSize, {color: "green"}]}>{group.expectedResult.maximum} </Text>
-                        )}
+                <View style={styleCategoryCard.categoryDataRows}>
+                    <Text style={styleCategoryCard.textSize}>{Budget}</Text>
+                    <Text style={[styleCategoryCard.textSize]}>$ {categoryBudget}</Text>
+                </View>
+                <View style={styleCategoryCard.categoryDataRows}>
+                    <Text style={styleCategoryCard.textSize}>{EstimatedExpense}</Text>
+                    <View style={[styleCategoryCard.rowContainer, styleCategoryCard.rightSide]}>
+                        <Text style={styleCategoryCard.textSize}>$ {minimumExpense}</Text>
+                        {maximumExpense == 0 ? (<Text></Text>) : (<Text style={styleCategoryCard.textSize}> - {maximumExpense} </Text>)}
                     </View>
+                </View>
+                <View style={styleCategoryCard.categoryDataRows}>
+                    <Text style={styleCategoryCard.textSize}>{Result}</Text>
+                    <Text style={[styleCategoryCard.textSize]}>$ {minimumResult} / {maximumResult} </Text>
                 </View>
             </View>
         </TouchableOpacity>
     )
+}
+
+const getCategoryData = (category) =>{
+    return {
+        categoryName   : category.name,
+        minimumExpense : category.expectedExpense.minimum,
+        maximumExpense : category.expectedExpense.maximum,
+        minimumResult  : category.expectedResult.minimum,
+        maximumResult  : category.expectedResult.maximum,
+        periodTime     : category.timePeriod.period,
+        categoryBudget : category.monthlyBudget
+    }
 }
