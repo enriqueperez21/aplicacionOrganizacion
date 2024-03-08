@@ -3,12 +3,19 @@ let screen = Dimensions.get("window");
 let widthScreen = screen.width;
 let heightScreen = screen.height;
 
+export const colors = {
+    primaryColor:   "#2F59EE",
+    FontPrimaryColor: "white",
+    secundaryColor: "#FFE49F",
+    FontSecundaryColor: "black"
+}
+
 const screenStandar = {
     clearColors:{
         primary: "white",
     },
     separation: {
-        headSeparation: heightScreen * 0.04,
+        headSeparation: 0,
         horizontalSeparation: widthScreen * 0.055,
         userHorizontalSeparation: widthScreen * 0.035,
     },

@@ -1,68 +1,91 @@
-import { StatusBar } from 'expo-status-bar';
-import { Button, FlatList, StyleSheet, Text, View} from 'react-native';
+import { Button, FlatList, Text, TouchableOpacity, View} from 'react-native';
 import { Headbar } from '../headBar/headBar';
 import { styleScreen } from '../standard/screenView';
-import { waitForData } from '../../services/createDataObject';
-import { useEffect, useState } from 'react';
-import { GroupCard } from '../Components/groupComponents';
+import { useData } from '../context/allDataContext';
+import { Texts } from '../standard/Texts';
+import { AccountsSection, ExpenseGestorSection, RecordsSection, RegisterSection } from '../Components/Home/HomeSection';
+import { BalanceCard } from '../Components/Home/HomeCards';
 
 export const Home = ({navigation}) => {
-  const [user, setUser] = useState(null);
-  const [groups, setGroups] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null); // Agrega un estado para manejar errores
+  const context = useData()
+  let data = context.allData
+  let accountSectionProps, expenseGestorSectionProps, registerSectionProps, RecordsSectionProps
+  const navigateToAnd = (section, especific)=>{navigation.navigate(section, {screen: especific})}
+  const accountTest = [
+    {"name" : "Banco Pichincha", "mount" : 250, "icon" : "bank"},
+    {"name" : "Banco Guayaquil", "mount" : 2.50, "icon" : "bank"},
+    {"name" : "Efectivo", "mount" : 2.50, "icon" : "money"},
+    {"name" : "Cooperativa", "mount" : 2.50, "icon" : "money"},
+    {"name" : "Ahorros", "mount" : 2.50, "icon" : "money"}
+  ]
+  if(data != null){
+    data = {...data, Accounts : accountTest}
+    accountSectionProps = {...getSectionProps("Accounts","Group", navigateToAnd, "Group", "GroupNav"), accounts:data.Accounts}
+    expenseGestorSectionProps = {...getSectionProps("ExpenseGestor", "Group", navigateToAnd, "CreateGestor", "New Category"), categories:data.UserExpenseCategory}
+    registerSectionProps = getSectionProps("ExpenseGestor", "Group", navigateToAnd, "Group", "GroupNav")
+    RecordsSectionProps = getSectionProps("ExpenseGestor", "Group", navigateToAnd, "Group", "GroupNav")
+  }
+  const props={
+    accountSectionProps,
+    expenseGestorSectionProps,
+    registerSectionProps,
+    RecordsSectionProps
+  }
+  return(
+    <View style={{flex: 1}}>
+    {(data == null) ? (
+      <LoadScreen/>
+    ):(
+      <HomeScreen data = {data} navigation = {navigation} props = {props}/>
+    )}
+    </View>
+  )
+}
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const Data = await waitForData();
-        setUser(Data.user);
-        setGroups(Data.accountGroups);
-        setIsLoading(false);
-      } catch (error) {
-        console.error("Error al obtener datos:", error);
-        setError(error); // Establece el estado de error en caso de fallo
-      }
-    }
-    fetchData();
-  }, []);
-
+const LoadScreen = () =>{
   return(
     <View style={styleScreen.container}>
-      {isLoading ? (
-        <Headbar ScreenName = "Home" userName = "Cargando..."/>
-      ) : error ? (
-        <Text>Ha ocurrido un error al cargar los datos.</Text>
-      ) : (
-        <Headbar ScreenName = "Home" userName = {user.name}/>
-      )}
+      <Headbar ScreenName = {Texts.Headbar.Home} userName = {Texts.LoadStatus.Load}/>
       <View style={styleScreen.screen}>
-        <View style={styleScreen.spacePrincipleWord}>
-          <Text style={styleScreen.mainText}>Grupo de cuentas</Text>
+        <View style={styleScreen.spaceToShowArray}>
+            <Text>{Texts.LoadStatus.Load}</Text>
         </View>
-          {isLoading? (
-            <View style={styleScreen.spaceToShowArray}>
-                <Text>CARGANDO</Text>
-            </View>
-          ) : (
-            <View style={styleScreen.spaceToShowArray}>
-              <FlatList
-
-                hidden={!groups || groups.length === 0}
-                visible={!isLoading && groups.length > 0} // Agrega la condición !isLoading
-                data={groups}
-                renderItem={({ item }) => {
-                  return (
-                    <GroupCard group={item} navigation ={navigation} />
-                  );
-                }}
-                keyExtractor={(item) => item.id}
-              />
-              </View>
-          )}
         <View style={styleScreen.spaceToSFooter}>
         </View>
       </View>
     </View>
-  );
+  )
 }
+
+const HomeScreen = ({data, props}) =>{
+  return(
+    <View style={styleScreen.container}>
+        <Headbar ScreenName = {Texts.Headbar.Home} userName = {data.user.name} />
+        <View style={styleScreen.screen}>
+          <BalanceCard saldo = {"$195,45"}/>
+          <AccountsSection      props = {props.accountSectionProps}/>
+          <ExpenseGestorSection props = {props.expenseGestorSectionProps}/>
+          <RegisterSection      props = {props.registerSectionProps}/>
+          <RecordsSection       props = {props.RecordsSectionProps}/>
+          <View style={styleScreen.spaceToSFooter}>
+          </View>
+        </View>
+      </View>
+  )
+}
+
+const getSectionProps = (sectionName, section, navigateToAnd, section2, especific2) => {
+  const onPressPlus = navigateToAnd
+  const onPressViewAll = navigateToAnd
+  const onPressSection = (currentAccount)=>{console.log("Cuenta presionada ",currentAccount)}
+  return {
+    nameSection: Texts.HomeScreen[sectionName],
+    viewAll: Texts.HomeScreen.ViewAll,
+    onPressSection,
+    onPressPlus,
+    onPressViewAll,
+    section,
+    section2,
+    especific2
+  };
+};

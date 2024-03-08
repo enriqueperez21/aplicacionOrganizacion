@@ -2,14 +2,8 @@ import { StatusBar } from 'expo-status-bar';
 import { Button, FlatList, StyleSheet, Text, View} from 'react-native';
 import { Headbar } from '../headBar/headBar';
 import { styleScreen } from '../standard/screenView';
-import { waitForData } from '../../services/createDataObject';
-import { useEffect, useState } from 'react';
 
 export const Group = ({navigation }) => {
-  const [groupData, setGroupData] = useState(global.dataObject.accountGroups[0]);
-  const [userData, setuserData] = useState(global.dataObject.user);
-  const [accountsData, setaccountsData] = useState(global.dataObject.accounts);
-
   return(
     <View style={styleScreen.container}>
       <Headbar ScreenName = "Group" userName = {userData.name}/>
@@ -18,7 +12,7 @@ export const Group = ({navigation }) => {
           <Text style={styleScreen.mainText}>{groupData.groupName}</Text>
         </View>
         <View style={styleScreen.spaceToShowArray}>
-          <FlatList
+          {/* <FlatList
             data={accountsData}
             renderItem={({ item }) => {
               return (
@@ -30,7 +24,8 @@ export const Group = ({navigation }) => {
               );
             }}
             keyExtractor={(item) => item.id}
-          />
+          /> */}
+          <Text>Hola</Text>
         </View>
         <View style={styleScreen.spaceToSFooter}>
         </View>
